@@ -1,0 +1,876 @@
+<?xml version="1.0"?>
+<robot name="six_dof_veg_chopper_arm" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <material name="blue">
+	    <color rgba="0 0 0.8 1"/>
+    </material>
+
+    <material name="white">
+	    <color rgba="1 1 1 1"/>
+    </material>
+
+    <material name="green">
+        <color rgba="0.0 0.8 0.0 1.0"/>
+    </material>
+
+    <link name="world">
+        <visual>
+          <geometry>
+             <box size="0.2 0.2 0.05"/>
+          </geometry>
+          <material name="green"/>
+          <origin rpy="0 0 0" xyz="0 0 0.025"/>
+          <material>
+            <color rgba="0 0 0.8 1" />
+          </material>
+        </visual>
+        <collision>
+          <origin rpy="0 0 0" xyz="0 0 0"/>
+          <geometry>
+            <box size="0.2 0.2 0.05"/>
+          </geometry>
+        </collision>
+    </link>
+
+    <joint name="world_joint" type="fixed">
+        <origin xyz="0 0 0.05" rpy="0 0 0" />
+        <parent link="world" />
+        <child link="base_cone" />
+    </joint>
+
+    <link name="base_cone">
+    <visual>
+      <origin rpy="3.14 0 0" xyz="0 0 0.07785"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/basecone.STL" scale="0.001 0.001 0.001"/> 
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="3.14 0 0" xyz="0 0 0.07785"  />
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/basecone.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    <joint name="base_cone_joint" type="fixed">
+        <origin xyz="0 0 0.07785" rpy="0 0 0" />
+        <parent link="base_cone" />
+        <child link="actuator1" />
+    </joint>
+    
+    <link name="actuator1">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/body20.STL" scale="0.001 0.001 0.001"/>  
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/body20.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    <joint name="Joint_1" type="revolute">
+        <origin xyz="0 0 0.0155" rpy="0 0 0" />
+        <parent link="actuator1" />
+        <child link="ring1" />
+        <axis xyz="0 0 1" />
+        <limit lower="-3.14" upper="3.14" effort="5" velocity="10" />
+    </joint>
+    
+    <link name="ring1">
+    <visual>
+      <origin rpy="3.14 0 0.785" xyz="0 0 0.0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/Ring48_20p.STL" scale="0.001 0.001 0.001"/>  
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="3.14 0 0.785" xyz="0 0 0.0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/Ring48_20p.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    <joint name="ring1_fixed" type="fixed">
+        <origin xyz="0 0 0.008" rpy="0 0 0" />
+        <parent link="ring1" />
+        <child link="actuator_2_holder" />
+    </joint>
+    
+    <link name="actuator_2_holder">
+    <visual>
+      <origin rpy="0 0 3.14" xyz="0.0556 0.0253 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/shoulderplate.STL" scale="0.001 0.001 0.001"/>  
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 3.14" xyz="0.0556 0.0253 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/shoulderplate.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    <joint name="actuator2_shell_fixed" type="fixed">
+        <origin xyz="0.0175 0 0" rpy="0 0 3.14" />
+        <parent link="actuator_2_holder" />
+        <child link="actuator_2_shell" />
+    </joint>
+    
+    <link name="actuator_2_shell">
+    <visual>
+      <origin rpy="-1.5707 0 1.5707" xyz="0 0 0.057"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/shouldershell.STL" scale="0.001 0.001 0.001"/> 
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="-1.5707 0 1.5707" xyz="0 0 0.057"  />
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/shouldershell.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    
+    <joint name="actuator2_cap_fixed" type="fixed">
+        <origin xyz="0 0 0.057" rpy="0 0 0" />
+        <parent link="actuator_2_shell" />
+        <child link="actuator_2_cap" />
+    </joint>
+    
+    <link name="actuator_2_cap">
+    <visual>
+      <origin rpy="0 1.5707 0" xyz="-0.062 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/shouldercap.STL" scale="0.001 0.001 0.001"/> 
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5707 0" xyz="-0.062 0 0"  />
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/shouldercap.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    <joint name="actuator2_fixed" type="fixed">
+        <origin xyz="0 0 0.057" rpy="0 0 0" />
+        <parent link="actuator_2_shell" />
+        <child link="actuator2" />
+    </joint>
+    
+    <link name="actuator2">
+    <visual>
+      <origin rpy="0 1.5707 0" xyz="0.005 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/body20.STL" scale="0.001 0.001 0.001"/>  
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.005 0 0" rpy="0 1.5707 0" />
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/body20.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    <joint name="Joint_2" type="revolute">
+        <origin xyz="0.0205 0 0" rpy="0 0 0" />
+        <parent link="actuator2" />
+        <child link="ring2" />
+        <axis xyz="1 0 0" />
+        <limit lower="-3.14" upper="3.14" effort="5" velocity="10" />
+    </joint>
+    
+    <link name="ring2">
+    <visual>
+      <origin rpy="1.5707 0.785 -1.5707" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/Ring48_20p.STL" scale="0.001 0.001 0.001"/>  
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="1.5707 0.785 -1.5707" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/Ring48_20p.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    <joint name="upper_arm_fixed" type="fixed">
+        <origin xyz="0.02 0 0" rpy="0 0 0" />
+        <parent link="ring2" />
+        <child link="upper_arm" />
+    </joint>
+    
+    <link name="upper_arm">
+    <visual>
+      <origin rpy="3.14 0 -1.5707" xyz="0.142 0 0.09525"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/UpperArm.STL" scale="0.001 0.001 0.001"/> 
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="3.14 0 -1.5707" xyz="0.142 0 0.09525"  />
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/UpperArm.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    <joint name="elbow_fixed" type="fixed">
+        <origin xyz="0 0 0.203" rpy="0 0 0" />
+        <parent link="upper_arm" />
+        <child link="elbow_shell" />
+    </joint>
+    
+    <link name="elbow_shell">
+    <visual>
+      <origin rpy="0 -1.5707 3.14" xyz="-0.03655 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/elbowshell.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 -1.5707 3.14" xyz="-0.03655 0 0" />
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/elbowshell.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    
+    <joint name="elbow_cap_fixed" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <parent link="elbow_shell" />
+        <child link="elbow_cap" />
+    </joint>
+    
+    <link name="elbow_cap">
+    <visual>
+      <origin rpy="0 -1.5707 0" xyz="0.022 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/elbowcap.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 -1.5707 0" xyz="0.022 0 0" />
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/elbowcap.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    
+    <joint name="actuator3_base_fixed" type="fixed">
+        <origin xyz="-0.037 0 0" rpy="0 0 0" />
+        <parent link="elbow_shell" />
+        <child link="actuator3_base" />
+    </joint>
+    
+    <link name="actuator3_base">
+    <visual>
+      <origin rpy="0 -1.5707 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/bodyH30_base.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 -1.5707 0" xyz="0 0 0" />
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/bodyH30_base.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    <joint name="actuator3_fixed" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <parent link="actuator3_base" />
+        <child link="actuator3" />
+    </joint>
+    
+    <link name="actuator3">
+    <visual>
+      <origin rpy="0 -1.5707 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/bodyH30.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 -1.5707 0" xyz="0 0 0" />
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/bodyH30.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    <joint name="Joint_3" type="revolute">
+        <origin xyz="-0.019 0 0" rpy="0 0 0" />
+        <parent link="actuator3" />
+        <child link="ring3" />
+        <axis xyz="1 0 0" />
+        <limit lower="-3.14" upper="3.14" effort="5" velocity="10" />
+    </joint>
+    
+    <link name="ring3">
+    <visual>
+      <origin rpy="1.5707 0.78535 1.5707" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/Ring48H30.STL" scale="0.001 0.001 0.001"/>  
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="1.5707 0.78535 1.5707" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/Ring48H30.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    
+    <joint name="fore_arm_fixed" type="fixed">
+        <origin xyz="0 0 0.151" rpy="0 0 0" />
+        <parent link="ring3" />
+        <child link="fore_arm" />
+    </joint>
+    
+    <link name="fore_arm">
+    <visual>
+      <origin rpy="3.14 0 0" xyz="-0.025 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/Forearm.STL" scale="0.001 0.001 0.001"/> 
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="3.14 0 0" xyz="-0.025 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/Forearm.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    <joint name="actuator4_shell_fixed" type="fixed">
+        <origin xyz="0 0 0.0267" rpy="0 0 0" />
+        <parent link="fore_arm" />
+        <child link="actuator4_shell" />
+    </joint>
+    
+    <link name="actuator4_shell">
+    <visual>
+      <origin rpy="-1.5707 0 1.5707" xyz="-0.013 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/wristshell.STL" scale="0.001 0.001 0.001"/> 
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="-1.5707 0 1.5707" xyz="-0.013 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/wristshell.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    
+    <joint name="actuator4_cap_fixed" type="fixed">
+        <origin xyz="-0.0515 0 0" rpy="0 0 0" />
+        <parent link="actuator4_shell" />
+        <child link="actuator4_cap" />
+    </joint>
+    
+    <link name="actuator4_cap">
+    <visual>
+      <origin rpy="0 1.5707 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/wristcap.STL" scale="0.001 0.001 0.001"/> 
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5707 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/wristcap.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    <joint name="actuator4_fixed" type="fixed">
+        <origin xyz="-0.0041 0 0" rpy="0 0 0" />
+        <parent link="actuator4_shell" />
+        <child link="actuator4" />
+    </joint>
+    
+    <link name="actuator4">
+    <visual>
+      <origin rpy="0 1.5707 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/bodyH40.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5707 0" xyz="0 0 0" />
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/bodyH40.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    <joint name="Joint_4" type="revolute">
+        <origin xyz="0.0065 0 0" rpy="0 0 0" />
+        <parent link="actuator4" />
+        <child link="ring4" />
+        <axis xyz="1 0 0" />
+        <limit lower="-3.14" upper="3.14" effort="5" velocity="10" />
+    </joint>
+    
+    <link name="ring4">
+    <visual>
+      <origin rpy="-1.5707 -0.78535 1.5707" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/Ring48H40.STL" scale="0.001 0.001 0.001"/>  
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="-1.5707 -0.78535 1.5707" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/Ring48H40.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    
+    <joint name="actuator5_shell_fixed" type="fixed">
+        <origin xyz="0.031 0 0" rpy="0 0 0" />
+        <parent link="ring4" />
+        <child link="actuator5_shell" />
+    </joint>
+    
+    <link name="actuator5_shell">
+    <visual>
+      <origin rpy="3.14 0 -1.5707" xyz="0 0 0.012"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/wristshell.STL" scale="0.001 0.001 0.001"/> 
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="3.14 0 -1.5707" xyz="0 0 0.012"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/wristshell.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    <joint name="actuator5_cap_fixed" type="fixed">
+        <origin xyz="0 0 -0.027" rpy="0 0 0" />  
+        <parent link="actuator5_shell" />
+        <child link="actuator5_cap" />
+    </joint>
+    
+    
+    <link name="actuator5_cap">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/wristcap.STL" scale="0.001 0.001 0.001"/> 
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/wristcap.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    
+    <joint name="actuator5_fixed" type="fixed">
+        <origin xyz="0 0 0.0205" rpy="0 0 0" /> <!---0.0041-->
+        <parent link="actuator5_shell" />
+        <child link="actuator5" />
+    </joint>
+    
+    <link name="actuator5">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/bodyH40.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/bodyH40.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    <joint name="Joint_5" type="revolute">
+        <origin xyz="0 0 0.0065" rpy="0 0 0" />
+        <parent link="actuator5" />
+        <child link="ring5" />
+        <axis xyz="0 0 1" />
+        <limit lower="-3.14" upper="3.14" effort="5" velocity="10" />
+    </joint>
+    
+    <link name="ring5">
+    <visual>
+      <origin rpy="0 3.14 0.78535" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/Ring48H40.STL" scale="0.001 0.001 0.001"/>  
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 3.14 0.78535" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/Ring48H40.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+  
+    <joint name="actuator6_shell_fixed" type="fixed">
+        <origin xyz="0 0 0.031" rpy="0 0 0" />
+        <parent link="ring5" />
+        <child link="actuator6_shell" />
+    </joint>
+    
+    <link name="actuator6_shell">
+    <visual>
+      <origin rpy="-1.5707 0 1.5707" xyz="0.012 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/wristshell.STL" scale="0.001 0.001 0.001"/> 
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="-1.5707 0 1.5707" xyz="0.012 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/wristshell.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    
+    <joint name="actuator6_cap_fixed" type="fixed">
+        <origin xyz="-0.0268 0 0" rpy="0 0 0" />
+        <parent link="actuator6_shell" />
+        <child link="actuator6_cap" />
+    </joint>
+    
+    <link name="actuator6_cap">
+    <visual>
+      <origin rpy="0 1.5707 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/wristcap.STL" scale="0.001 0.001 0.001"/> 
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5707 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Parts/files/wristcap.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    <joint name="actuator6_fixed" type="fixed">
+        <origin xyz="0.0209 0 0" rpy="0 0 0" />
+        <parent link="actuator6_shell" />
+        <child link="actuator6" />
+    </joint>
+    
+    <link name="actuator6">
+    <visual>
+      <origin rpy="0 1.5707 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/bodyH40.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 1.5707 0" xyz="0 0 0" />
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/bodyH40.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    <joint name="Joint_6" type="revolute">
+        <origin xyz="0.0065 0 0" rpy="0 0 0" />
+        <parent link="actuator6" />
+        <child link="ring6" />
+        <axis xyz="1 0 0" />
+        <limit lower="-3.14" upper="3.14" effort="5" velocity="10" />
+    </joint>
+    
+    <link name="ring6">
+    <visual>
+      <origin rpy="-1.5707 -0.78535 1.5707" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/Ring48H40.STL" scale="0.001 0.001 0.001"/>  
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="-1.5707 -0.78535 1.5707" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Actuators/files/Ring48H40.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    <joint name="gripper_plate_fixed" type="fixed">
+        <origin xyz="0.0044 0 0" rpy="0 0 0" />
+        <parent link="ring6" />
+        <child link="gripper_plate" />
+    </joint>
+    
+    <link name="gripper_plate">
+    <visual>
+      <origin rpy="1.5707 0 1.5707" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Gripper/files/grip2plate.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="1.5707 0 1.5707" xyz="0 0 0" />
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Gripper/files/grip2plate.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    
+    <joint name="gripper_base_fixed" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <parent link="gripper_plate" />
+        <child link="gripper_base" />
+    </joint>
+    
+    <link name="gripper_base">
+    <visual>
+      <origin rpy="0 0 3.14" xyz="-0.1865 0.0304 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Gripper/files/gripperbase2.STL" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 3.14" xyz="-0.1865 0.0304 0" />
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Gripper/files/gripperbase2.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    <joint name="finger_joint1" type="revolute">
+        <origin xyz="0.032 -0.0195 0.005" rpy="0 0 0" />
+        <parent link="gripper_base" />
+        <child link="finger1" />
+        <axis xyz="0 0 1" />
+        <limit lower="-0.77" upper="0" effort="5" velocity="10" />
+    </joint>
+    
+    <link name="finger1">
+    <visual>
+      <origin rpy="0 0 -1.2" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Gripper/files/finger.STL" scale="0.001 0.001 0.001"/>  
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 -1.2" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Gripper/files/finger.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    <joint name="finger_joint2" type="revolute">
+        <origin xyz="0.0322 0.0195 -0.005" rpy="0 0 0" />
+        <parent link="gripper_base" />
+        <child link="finger2" />
+        <axis xyz="0 0 1" />
+        <mimic joint="finger_joint1" multiplier="-1" offset="0" />
+        <limit lower="0" upper="0.77" effort="5" velocity="10" />
+    </joint>
+    
+    <link name="finger2">
+    <visual>
+      <origin rpy="3.14 0 1.2" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Gripper/files/finger.STL" scale="0.001 0.001 0.001"/>  
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.75294 0.75294 0.75294 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="3.14 0 1.2" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://robotic_veg_chopper/stl_files/Gripper/files/finger.STL" scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+    </link>
+    
+    <joint name="endeff_fixed" type="fixed">
+        <origin xyz="0.075 0 0" rpy="0 0 0" />
+        <parent link="gripper_base" />
+        <child link="endeff" />
+    </joint>
+    
+    <link name="endeff"/>
+      
+</robot>
