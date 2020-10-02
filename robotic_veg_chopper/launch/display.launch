@@ -13,7 +13,7 @@
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" >
   </node>
   
-  <!-- <node name="Joints_to_aurdino" pkg="robotic_veg_chopper" type="publish_joints_to_arudino.py" output="screen"/>  -->
+  <node name="Joints_to_aurdino" pkg="robotic_veg_chopper" type="publish_joints_to_arudino.py" output="screen"/>
 
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" /> 
   <node name="rviz" pkg="rviz" type="rviz"/> 
