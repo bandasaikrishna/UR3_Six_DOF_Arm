@@ -1,0 +1,385 @@
+<?xml version="1.0" ?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="six_dof_veg_chopper_arm">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="Arm">
+        <chain base_link="base_cone" tip_link="endeff" />
+    </group>
+    <group name="Gripper">
+        <link name="finger1" />
+        <link name="finger2" />
+        <link name="gripper_plate" />
+        <link name="gripper_base" />
+        <link name="endeff" />
+        <joint name="finger_joint1" />
+        <joint name="finger_joint2" />
+        <joint name="gripper_base_fixed" />
+        <joint name="gripper_plate_fixed" />
+        <joint name="endeff_fixed" />
+        <chain base_link="gripper_plate" tip_link="endeff" />
+    </group>
+    <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+    <group_state name="Home" group="Arm">
+        <joint name="Joint_1" value="0" />
+        <joint name="Joint_2" value="0" />
+        <joint name="Joint_3" value="0" />
+        <joint name="Joint_4" value="0" />
+        <joint name="Joint_5" value="0" />
+        <joint name="Joint_6" value="0" />
+    </group_state>
+    <group_state name="random" group="Arm">
+        <joint name="Joint_1" value="2.9675" />
+        <joint name="Joint_2" value="-1.7253" />
+        <joint name="Joint_3" value="0.6901" />
+        <joint name="Joint_4" value="1.1732" />
+        <joint name="Joint_5" value="0.5866" />
+        <joint name="Joint_6" value="-3.071" />
+    </group_state>
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <end_effector name="Gripper" parent_link="ring6" group="Gripper" parent_group="Arm" />
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="actuator1" link2="actuator2" reason="Never" />
+    <disable_collisions link1="actuator1" link2="actuator3" reason="Never" />
+    <disable_collisions link1="actuator1" link2="actuator3_base" reason="Never" />
+    <disable_collisions link1="actuator1" link2="actuator4_cap" reason="Never" />
+    <disable_collisions link1="actuator1" link2="actuator4_shell" reason="Never" />
+    <disable_collisions link1="actuator1" link2="actuator_2_cap" reason="Never" />
+    <disable_collisions link1="actuator1" link2="actuator_2_holder" reason="Never" />
+    <disable_collisions link1="actuator1" link2="actuator_2_shell" reason="Never" />
+    <disable_collisions link1="actuator1" link2="base_cone" reason="Adjacent" />
+    <disable_collisions link1="actuator1" link2="elbow_cap" reason="Never" />
+    <disable_collisions link1="actuator1" link2="elbow_shell" reason="Never" />
+    <disable_collisions link1="actuator1" link2="ring1" reason="Adjacent" />
+    <disable_collisions link1="actuator1" link2="ring2" reason="Never" />
+    <disable_collisions link1="actuator1" link2="ring3" reason="Never" />
+    <disable_collisions link1="actuator1" link2="world" reason="Never" />
+    <disable_collisions link1="actuator2" link2="actuator3" reason="Never" />
+    <disable_collisions link1="actuator2" link2="actuator3_base" reason="Never" />
+    <disable_collisions link1="actuator2" link2="actuator4" reason="Never" />
+    <disable_collisions link1="actuator2" link2="actuator4_cap" reason="Never" />
+    <disable_collisions link1="actuator2" link2="actuator4_shell" reason="Never" />
+    <disable_collisions link1="actuator2" link2="actuator_2_cap" reason="Never" />
+    <disable_collisions link1="actuator2" link2="actuator_2_holder" reason="Never" />
+    <disable_collisions link1="actuator2" link2="actuator_2_shell" reason="Adjacent" />
+    <disable_collisions link1="actuator2" link2="base_cone" reason="Never" />
+    <disable_collisions link1="actuator2" link2="elbow_cap" reason="Never" />
+    <disable_collisions link1="actuator2" link2="elbow_shell" reason="Never" />
+    <disable_collisions link1="actuator2" link2="fore_arm" reason="Never" />
+    <disable_collisions link1="actuator2" link2="ring1" reason="Never" />
+    <disable_collisions link1="actuator2" link2="ring2" reason="Adjacent" />
+    <disable_collisions link1="actuator2" link2="ring3" reason="Never" />
+    <disable_collisions link1="actuator2" link2="ring4" reason="Never" />
+    <disable_collisions link1="actuator2" link2="upper_arm" reason="User" />
+    <disable_collisions link1="actuator2" link2="world" reason="Never" />
+    <disable_collisions link1="actuator3" link2="actuator3_base" reason="Adjacent" />
+    <disable_collisions link1="actuator3" link2="actuator4" reason="Never" />
+    <disable_collisions link1="actuator3" link2="actuator4_cap" reason="Never" />
+    <disable_collisions link1="actuator3" link2="actuator4_shell" reason="Never" />
+    <disable_collisions link1="actuator3" link2="actuator5" reason="Never" />
+    <disable_collisions link1="actuator3" link2="actuator5_cap" reason="Never" />
+    <disable_collisions link1="actuator3" link2="actuator5_shell" reason="Never" />
+    <disable_collisions link1="actuator3" link2="actuator6" reason="Never" />
+    <disable_collisions link1="actuator3" link2="actuator6_cap" reason="Never" />
+    <disable_collisions link1="actuator3" link2="actuator6_shell" reason="Never" />
+    <disable_collisions link1="actuator3" link2="actuator_2_cap" reason="Never" />
+    <disable_collisions link1="actuator3" link2="actuator_2_holder" reason="Never" />
+    <disable_collisions link1="actuator3" link2="actuator_2_shell" reason="Never" />
+    <disable_collisions link1="actuator3" link2="base_cone" reason="Never" />
+    <disable_collisions link1="actuator3" link2="elbow_cap" reason="Never" />
+    <disable_collisions link1="actuator3" link2="elbow_shell" reason="Never" />
+    <disable_collisions link1="actuator3" link2="finger1" reason="Never" />
+    <disable_collisions link1="actuator3" link2="finger2" reason="Never" />
+    <disable_collisions link1="actuator3" link2="fore_arm" reason="Never" />
+    <disable_collisions link1="actuator3" link2="gripper_base" reason="Never" />
+    <disable_collisions link1="actuator3" link2="gripper_plate" reason="Never" />
+    <disable_collisions link1="actuator3" link2="ring1" reason="Never" />
+    <disable_collisions link1="actuator3" link2="ring2" reason="Never" />
+    <disable_collisions link1="actuator3" link2="ring3" reason="Adjacent" />
+    <disable_collisions link1="actuator3" link2="ring4" reason="Never" />
+    <disable_collisions link1="actuator3" link2="ring5" reason="Never" />
+    <disable_collisions link1="actuator3" link2="ring6" reason="Never" />
+    <disable_collisions link1="actuator3" link2="upper_arm" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="actuator4" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="actuator4_cap" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="actuator4_shell" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="actuator5" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="actuator5_cap" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="actuator5_shell" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="actuator6" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="actuator6_cap" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="actuator6_shell" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="actuator_2_cap" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="actuator_2_holder" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="actuator_2_shell" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="base_cone" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="elbow_cap" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="elbow_shell" reason="Adjacent" />
+    <disable_collisions link1="actuator3_base" link2="finger1" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="finger2" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="fore_arm" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="gripper_base" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="gripper_plate" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="ring1" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="ring2" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="ring3" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="ring4" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="ring5" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="ring6" reason="Never" />
+    <disable_collisions link1="actuator3_base" link2="upper_arm" reason="Never" />
+    <disable_collisions link1="actuator4" link2="actuator4_cap" reason="Never" />
+    <disable_collisions link1="actuator4" link2="actuator4_shell" reason="Adjacent" />
+    <disable_collisions link1="actuator4" link2="actuator5" reason="Never" />
+    <disable_collisions link1="actuator4" link2="actuator5_cap" reason="Never" />
+    <disable_collisions link1="actuator4" link2="actuator5_shell" reason="Never" />
+    <disable_collisions link1="actuator4" link2="actuator6" reason="Never" />
+    <disable_collisions link1="actuator4" link2="actuator6_cap" reason="Never" />
+    <disable_collisions link1="actuator4" link2="actuator6_shell" reason="Never" />
+    <disable_collisions link1="actuator4" link2="actuator_2_cap" reason="Never" />
+    <disable_collisions link1="actuator4" link2="elbow_cap" reason="Never" />
+    <disable_collisions link1="actuator4" link2="elbow_shell" reason="Never" />
+    <disable_collisions link1="actuator4" link2="finger1" reason="Never" />
+    <disable_collisions link1="actuator4" link2="finger2" reason="Never" />
+    <disable_collisions link1="actuator4" link2="fore_arm" reason="Never" />
+    <disable_collisions link1="actuator4" link2="gripper_base" reason="Never" />
+    <disable_collisions link1="actuator4" link2="ring2" reason="Never" />
+    <disable_collisions link1="actuator4" link2="ring3" reason="Never" />
+    <disable_collisions link1="actuator4" link2="ring4" reason="Adjacent" />
+    <disable_collisions link1="actuator4" link2="ring5" reason="Never" />
+    <disable_collisions link1="actuator4" link2="ring6" reason="Never" />
+    <disable_collisions link1="actuator4" link2="upper_arm" reason="Never" />
+    <disable_collisions link1="actuator4_cap" link2="actuator4_shell" reason="Adjacent" />
+    <disable_collisions link1="actuator4_cap" link2="actuator5" reason="Never" />
+    <disable_collisions link1="actuator4_cap" link2="actuator5_cap" reason="Never" />
+    <disable_collisions link1="actuator4_cap" link2="actuator5_shell" reason="Never" />
+    <disable_collisions link1="actuator4_cap" link2="actuator6" reason="Never" />
+    <disable_collisions link1="actuator4_cap" link2="actuator6_cap" reason="Never" />
+    <disable_collisions link1="actuator4_cap" link2="actuator6_shell" reason="Never" />
+    <disable_collisions link1="actuator4_cap" link2="actuator_2_holder" reason="Never" />
+    <disable_collisions link1="actuator4_cap" link2="base_cone" reason="Never" />
+    <disable_collisions link1="actuator4_cap" link2="elbow_cap" reason="Never" />
+    <disable_collisions link1="actuator4_cap" link2="elbow_shell" reason="Never" />
+    <disable_collisions link1="actuator4_cap" link2="fore_arm" reason="Never" />
+    <disable_collisions link1="actuator4_cap" link2="gripper_base" reason="Never" />
+    <disable_collisions link1="actuator4_cap" link2="gripper_plate" reason="Never" />
+    <disable_collisions link1="actuator4_cap" link2="ring1" reason="Never" />
+    <disable_collisions link1="actuator4_cap" link2="ring2" reason="Never" />
+    <disable_collisions link1="actuator4_cap" link2="ring3" reason="Never" />
+    <disable_collisions link1="actuator4_cap" link2="ring4" reason="Never" />
+    <disable_collisions link1="actuator4_cap" link2="ring5" reason="Never" />
+    <disable_collisions link1="actuator4_cap" link2="ring6" reason="Never" />
+    <disable_collisions link1="actuator4_cap" link2="upper_arm" reason="Never" />
+    <disable_collisions link1="actuator4_shell" link2="actuator5" reason="Never" />
+    <disable_collisions link1="actuator4_shell" link2="actuator5_cap" reason="Never" />
+    <disable_collisions link1="actuator4_shell" link2="actuator5_shell" reason="Never" />
+    <disable_collisions link1="actuator4_shell" link2="actuator6" reason="Never" />
+    <disable_collisions link1="actuator4_shell" link2="actuator6_cap" reason="Never" />
+    <disable_collisions link1="actuator4_shell" link2="actuator6_shell" reason="Never" />
+    <disable_collisions link1="actuator4_shell" link2="elbow_cap" reason="Never" />
+    <disable_collisions link1="actuator4_shell" link2="elbow_shell" reason="Never" />
+    <disable_collisions link1="actuator4_shell" link2="fore_arm" reason="Adjacent" />
+    <disable_collisions link1="actuator4_shell" link2="ring1" reason="Never" />
+    <disable_collisions link1="actuator4_shell" link2="ring2" reason="Never" />
+    <disable_collisions link1="actuator4_shell" link2="ring3" reason="Never" />
+    <disable_collisions link1="actuator4_shell" link2="ring4" reason="Never" />
+    <disable_collisions link1="actuator4_shell" link2="ring5" reason="Never" />
+    <disable_collisions link1="actuator4_shell" link2="ring6" reason="Never" />
+    <disable_collisions link1="actuator4_shell" link2="upper_arm" reason="Never" />
+    <disable_collisions link1="actuator5" link2="actuator5_cap" reason="Never" />
+    <disable_collisions link1="actuator5" link2="actuator5_shell" reason="Adjacent" />
+    <disable_collisions link1="actuator5" link2="actuator6" reason="Never" />
+    <disable_collisions link1="actuator5" link2="actuator6_cap" reason="Never" />
+    <disable_collisions link1="actuator5" link2="actuator6_shell" reason="Never" />
+    <disable_collisions link1="actuator5" link2="actuator_2_cap" reason="Never" />
+    <disable_collisions link1="actuator5" link2="elbow_cap" reason="Never" />
+    <disable_collisions link1="actuator5" link2="elbow_shell" reason="Never" />
+    <disable_collisions link1="actuator5" link2="finger1" reason="Never" />
+    <disable_collisions link1="actuator5" link2="finger2" reason="Never" />
+    <disable_collisions link1="actuator5" link2="fore_arm" reason="Never" />
+    <disable_collisions link1="actuator5" link2="gripper_base" reason="Never" />
+    <disable_collisions link1="actuator5" link2="gripper_plate" reason="Never" />
+    <disable_collisions link1="actuator5" link2="ring3" reason="Never" />
+    <disable_collisions link1="actuator5" link2="ring4" reason="Never" />
+    <disable_collisions link1="actuator5" link2="ring5" reason="Adjacent" />
+    <disable_collisions link1="actuator5" link2="ring6" reason="Never" />
+    <disable_collisions link1="actuator5_cap" link2="actuator5_shell" reason="Adjacent" />
+    <disable_collisions link1="actuator5_cap" link2="actuator6" reason="Never" />
+    <disable_collisions link1="actuator5_cap" link2="actuator6_cap" reason="Never" />
+    <disable_collisions link1="actuator5_cap" link2="actuator6_shell" reason="Never" />
+    <disable_collisions link1="actuator5_cap" link2="actuator_2_cap" reason="Never" />
+    <disable_collisions link1="actuator5_cap" link2="elbow_cap" reason="Never" />
+    <disable_collisions link1="actuator5_cap" link2="elbow_shell" reason="Never" />
+    <disable_collisions link1="actuator5_cap" link2="finger1" reason="Never" />
+    <disable_collisions link1="actuator5_cap" link2="finger2" reason="Never" />
+    <disable_collisions link1="actuator5_cap" link2="fore_arm" reason="Never" />
+    <disable_collisions link1="actuator5_cap" link2="gripper_base" reason="Never" />
+    <disable_collisions link1="actuator5_cap" link2="gripper_plate" reason="Never" />
+    <disable_collisions link1="actuator5_cap" link2="ring3" reason="Never" />
+    <disable_collisions link1="actuator5_cap" link2="ring4" reason="Never" />
+    <disable_collisions link1="actuator5_cap" link2="ring5" reason="Never" />
+    <disable_collisions link1="actuator5_cap" link2="ring6" reason="Never" />
+    <disable_collisions link1="actuator5_shell" link2="actuator6" reason="Never" />
+    <disable_collisions link1="actuator5_shell" link2="actuator6_cap" reason="Never" />
+    <disable_collisions link1="actuator5_shell" link2="actuator6_shell" reason="Never" />
+    <disable_collisions link1="actuator5_shell" link2="actuator_2_cap" reason="Never" />
+    <disable_collisions link1="actuator5_shell" link2="elbow_cap" reason="Never" />
+    <disable_collisions link1="actuator5_shell" link2="elbow_shell" reason="Never" />
+    <disable_collisions link1="actuator5_shell" link2="finger1" reason="Never" />
+    <disable_collisions link1="actuator5_shell" link2="finger2" reason="Never" />
+    <disable_collisions link1="actuator5_shell" link2="fore_arm" reason="Never" />
+    <disable_collisions link1="actuator5_shell" link2="gripper_base" reason="Never" />
+    <disable_collisions link1="actuator5_shell" link2="gripper_plate" reason="Never" />
+    <disable_collisions link1="actuator5_shell" link2="ring3" reason="Never" />
+    <disable_collisions link1="actuator5_shell" link2="ring4" reason="Adjacent" />
+    <disable_collisions link1="actuator5_shell" link2="ring5" reason="Never" />
+    <disable_collisions link1="actuator5_shell" link2="ring6" reason="Never" />
+    <disable_collisions link1="actuator6" link2="actuator6_cap" reason="Never" />
+    <disable_collisions link1="actuator6" link2="actuator6_shell" reason="Adjacent" />
+    <disable_collisions link1="actuator6" link2="actuator_2_cap" reason="Never" />
+    <disable_collisions link1="actuator6" link2="elbow_cap" reason="Never" />
+    <disable_collisions link1="actuator6" link2="elbow_shell" reason="Never" />
+    <disable_collisions link1="actuator6" link2="finger1" reason="Never" />
+    <disable_collisions link1="actuator6" link2="finger2" reason="Never" />
+    <disable_collisions link1="actuator6" link2="fore_arm" reason="Never" />
+    <disable_collisions link1="actuator6" link2="gripper_base" reason="Never" />
+    <disable_collisions link1="actuator6" link2="gripper_plate" reason="Never" />
+    <disable_collisions link1="actuator6" link2="ring3" reason="Never" />
+    <disable_collisions link1="actuator6" link2="ring4" reason="Never" />
+    <disable_collisions link1="actuator6" link2="ring5" reason="Never" />
+    <disable_collisions link1="actuator6" link2="ring6" reason="Adjacent" />
+    <disable_collisions link1="actuator6_cap" link2="actuator6_shell" reason="Adjacent" />
+    <disable_collisions link1="actuator6_cap" link2="actuator_2_cap" reason="Never" />
+    <disable_collisions link1="actuator6_cap" link2="elbow_cap" reason="Never" />
+    <disable_collisions link1="actuator6_cap" link2="elbow_shell" reason="Never" />
+    <disable_collisions link1="actuator6_cap" link2="finger1" reason="Never" />
+    <disable_collisions link1="actuator6_cap" link2="finger2" reason="Never" />
+    <disable_collisions link1="actuator6_cap" link2="fore_arm" reason="Never" />
+    <disable_collisions link1="actuator6_cap" link2="gripper_base" reason="Never" />
+    <disable_collisions link1="actuator6_cap" link2="gripper_plate" reason="Never" />
+    <disable_collisions link1="actuator6_cap" link2="ring3" reason="Never" />
+    <disable_collisions link1="actuator6_cap" link2="ring4" reason="Never" />
+    <disable_collisions link1="actuator6_cap" link2="ring5" reason="Never" />
+    <disable_collisions link1="actuator6_cap" link2="ring6" reason="Never" />
+    <disable_collisions link1="actuator6_shell" link2="actuator_2_cap" reason="Never" />
+    <disable_collisions link1="actuator6_shell" link2="elbow_cap" reason="Never" />
+    <disable_collisions link1="actuator6_shell" link2="elbow_shell" reason="Never" />
+    <disable_collisions link1="actuator6_shell" link2="finger1" reason="Never" />
+    <disable_collisions link1="actuator6_shell" link2="finger2" reason="Never" />
+    <disable_collisions link1="actuator6_shell" link2="fore_arm" reason="Never" />
+    <disable_collisions link1="actuator6_shell" link2="gripper_base" reason="Never" />
+    <disable_collisions link1="actuator6_shell" link2="gripper_plate" reason="Never" />
+    <disable_collisions link1="actuator6_shell" link2="ring3" reason="Never" />
+    <disable_collisions link1="actuator6_shell" link2="ring4" reason="Never" />
+    <disable_collisions link1="actuator6_shell" link2="ring5" reason="Adjacent" />
+    <disable_collisions link1="actuator6_shell" link2="ring6" reason="Never" />
+    <disable_collisions link1="actuator_2_cap" link2="actuator_2_holder" reason="Never" />
+    <disable_collisions link1="actuator_2_cap" link2="actuator_2_shell" reason="Adjacent" />
+    <disable_collisions link1="actuator_2_cap" link2="base_cone" reason="Never" />
+    <disable_collisions link1="actuator_2_cap" link2="elbow_cap" reason="Never" />
+    <disable_collisions link1="actuator_2_cap" link2="elbow_shell" reason="Never" />
+    <disable_collisions link1="actuator_2_cap" link2="fore_arm" reason="Never" />
+    <disable_collisions link1="actuator_2_cap" link2="gripper_plate" reason="Never" />
+    <disable_collisions link1="actuator_2_cap" link2="ring1" reason="Never" />
+    <disable_collisions link1="actuator_2_cap" link2="ring2" reason="Never" />
+    <disable_collisions link1="actuator_2_cap" link2="ring3" reason="Never" />
+    <disable_collisions link1="actuator_2_cap" link2="ring4" reason="Never" />
+    <disable_collisions link1="actuator_2_cap" link2="ring5" reason="Never" />
+    <disable_collisions link1="actuator_2_cap" link2="ring6" reason="Never" />
+    <disable_collisions link1="actuator_2_cap" link2="upper_arm" reason="Never" />
+    <disable_collisions link1="actuator_2_cap" link2="world" reason="Never" />
+    <disable_collisions link1="actuator_2_holder" link2="actuator_2_shell" reason="Adjacent" />
+    <disable_collisions link1="actuator_2_holder" link2="base_cone" reason="Never" />
+    <disable_collisions link1="actuator_2_holder" link2="elbow_cap" reason="Never" />
+    <disable_collisions link1="actuator_2_holder" link2="elbow_shell" reason="Never" />
+    <disable_collisions link1="actuator_2_holder" link2="ring1" reason="Adjacent" />
+    <disable_collisions link1="actuator_2_holder" link2="ring2" reason="Never" />
+    <disable_collisions link1="actuator_2_holder" link2="ring3" reason="Never" />
+    <disable_collisions link1="actuator_2_holder" link2="world" reason="Never" />
+    <disable_collisions link1="actuator_2_shell" link2="base_cone" reason="Never" />
+    <disable_collisions link1="actuator_2_shell" link2="elbow_cap" reason="Never" />
+    <disable_collisions link1="actuator_2_shell" link2="elbow_shell" reason="Never" />
+    <disable_collisions link1="actuator_2_shell" link2="ring1" reason="Never" />
+    <disable_collisions link1="actuator_2_shell" link2="ring2" reason="Never" />
+    <disable_collisions link1="actuator_2_shell" link2="ring3" reason="Never" />
+    <disable_collisions link1="actuator_2_shell" link2="upper_arm" reason="Never" />
+    <disable_collisions link1="actuator_2_shell" link2="world" reason="Never" />
+    <disable_collisions link1="base_cone" link2="elbow_cap" reason="Never" />
+    <disable_collisions link1="base_cone" link2="ring1" reason="Never" />
+    <disable_collisions link1="base_cone" link2="ring2" reason="Never" />
+    <disable_collisions link1="base_cone" link2="ring3" reason="Never" />
+    <disable_collisions link1="base_cone" link2="world" reason="Adjacent" />
+    <disable_collisions link1="elbow_cap" link2="elbow_shell" reason="Adjacent" />
+    <disable_collisions link1="elbow_cap" link2="finger1" reason="Never" />
+    <disable_collisions link1="elbow_cap" link2="finger2" reason="Never" />
+    <disable_collisions link1="elbow_cap" link2="fore_arm" reason="Never" />
+    <disable_collisions link1="elbow_cap" link2="gripper_base" reason="Never" />
+    <disable_collisions link1="elbow_cap" link2="gripper_plate" reason="Never" />
+    <disable_collisions link1="elbow_cap" link2="ring1" reason="Never" />
+    <disable_collisions link1="elbow_cap" link2="ring2" reason="Never" />
+    <disable_collisions link1="elbow_cap" link2="ring3" reason="Never" />
+    <disable_collisions link1="elbow_cap" link2="ring4" reason="Never" />
+    <disable_collisions link1="elbow_cap" link2="ring5" reason="Never" />
+    <disable_collisions link1="elbow_cap" link2="ring6" reason="Never" />
+    <disable_collisions link1="elbow_cap" link2="upper_arm" reason="Never" />
+    <disable_collisions link1="elbow_shell" link2="fore_arm" reason="Never" />
+    <disable_collisions link1="elbow_shell" link2="gripper_base" reason="Never" />
+    <disable_collisions link1="elbow_shell" link2="gripper_plate" reason="Never" />
+    <disable_collisions link1="elbow_shell" link2="ring1" reason="Never" />
+    <disable_collisions link1="elbow_shell" link2="ring2" reason="Never" />
+    <disable_collisions link1="elbow_shell" link2="ring3" reason="Never" />
+    <disable_collisions link1="elbow_shell" link2="ring4" reason="Never" />
+    <disable_collisions link1="elbow_shell" link2="ring5" reason="Never" />
+    <disable_collisions link1="elbow_shell" link2="ring6" reason="Never" />
+    <disable_collisions link1="elbow_shell" link2="upper_arm" reason="Adjacent" />
+    <disable_collisions link1="finger1" link2="finger2" reason="Never" />
+    <disable_collisions link1="finger1" link2="gripper_base" reason="Adjacent" />
+    <disable_collisions link1="finger1" link2="gripper_plate" reason="Never" />
+    <disable_collisions link1="finger1" link2="ring3" reason="Never" />
+    <disable_collisions link1="finger1" link2="ring4" reason="Never" />
+    <disable_collisions link1="finger1" link2="ring5" reason="Never" />
+    <disable_collisions link1="finger1" link2="ring6" reason="Never" />
+    <disable_collisions link1="finger2" link2="gripper_base" reason="Adjacent" />
+    <disable_collisions link1="finger2" link2="gripper_plate" reason="Never" />
+    <disable_collisions link1="finger2" link2="ring3" reason="Never" />
+    <disable_collisions link1="finger2" link2="ring4" reason="Never" />
+    <disable_collisions link1="finger2" link2="ring5" reason="Never" />
+    <disable_collisions link1="finger2" link2="ring6" reason="Never" />
+    <disable_collisions link1="fore_arm" link2="ring1" reason="Never" />
+    <disable_collisions link1="fore_arm" link2="ring2" reason="Never" />
+    <disable_collisions link1="fore_arm" link2="ring3" reason="Adjacent" />
+    <disable_collisions link1="fore_arm" link2="ring4" reason="Never" />
+    <disable_collisions link1="fore_arm" link2="ring5" reason="Never" />
+    <disable_collisions link1="fore_arm" link2="ring6" reason="Never" />
+    <disable_collisions link1="fore_arm" link2="upper_arm" reason="Never" />
+    <disable_collisions link1="gripper_base" link2="gripper_plate" reason="Adjacent" />
+    <disable_collisions link1="gripper_base" link2="ring3" reason="Never" />
+    <disable_collisions link1="gripper_base" link2="ring4" reason="Never" />
+    <disable_collisions link1="gripper_base" link2="ring5" reason="Never" />
+    <disable_collisions link1="gripper_base" link2="ring6" reason="Never" />
+    <disable_collisions link1="gripper_plate" link2="ring3" reason="Never" />
+    <disable_collisions link1="gripper_plate" link2="ring4" reason="Never" />
+    <disable_collisions link1="gripper_plate" link2="ring5" reason="Never" />
+    <disable_collisions link1="gripper_plate" link2="ring6" reason="Adjacent" />
+    <disable_collisions link1="ring1" link2="ring2" reason="Never" />
+    <disable_collisions link1="ring1" link2="ring3" reason="Never" />
+    <disable_collisions link1="ring1" link2="world" reason="Never" />
+    <disable_collisions link1="ring2" link2="ring3" reason="Never" />
+    <disable_collisions link1="ring2" link2="ring4" reason="Never" />
+    <disable_collisions link1="ring2" link2="upper_arm" reason="Adjacent" />
+    <disable_collisions link1="ring2" link2="world" reason="Never" />
+    <disable_collisions link1="ring3" link2="ring4" reason="Never" />
+    <disable_collisions link1="ring3" link2="ring5" reason="Never" />
+    <disable_collisions link1="ring3" link2="ring6" reason="Never" />
+    <disable_collisions link1="ring3" link2="upper_arm" reason="Never" />
+    <disable_collisions link1="ring4" link2="ring5" reason="Never" />
+    <disable_collisions link1="ring4" link2="ring6" reason="Never" />
+    <disable_collisions link1="ring4" link2="upper_arm" reason="Never" />
+    <disable_collisions link1="ring5" link2="ring6" reason="Never" />
+    <disable_collisions link1="upper_arm" link2="world" reason="Never" />
+</robot>
